@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Algorithms.cs" />
+    <Compile Include="Edge.cs" />
+    <Compile Include="Graph.cs" />
+    <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
