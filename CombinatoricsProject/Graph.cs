@@ -9,17 +9,29 @@ namespace CombinatoricsProject
     class Graph
     {
         List<Edge> edges = new List<Edge>();
+        List<List<Edge>> removedEdgeSets = new List<List<Edge>>();
+        List<int> vertices = new List<int>();
         int vertexCount;
 
-        public Graph(int vertices, List<Edge> edgeList)
+        public Graph(int vert, List<Edge> edgeList)
         {
             edges = edgeList;
-            vertexCount = vertices;
+            vertexCount = vert;
+            vertices = vertexList(vert);
+        }
+
+        public Graph Copy()
+        {
+            Graph copy = (Graph)this.MemberwiseClone();
+            copy.edges = new List<Edge>(edges);
+            copy.vertexCount = this.vertexCount;
+            copy.vertices = new List<int>(vertices);
+            return copy;
         }
 
         public int numberOfVertices()
         {
-            //Returns the number of vertices in the graph
+            //Returns the number of vertices in the original graph
             return vertexCount;
         }
         public List<Edge> listEdges(int vertex)
@@ -44,9 +56,46 @@ namespace CombinatoricsProject
             //Removes Edge e from edges
             edges.Remove(e);
         }      
+        public void removeEdges(List<Edge> edgeList)
+        {
+            removedEdgeSets.Add(edgeList);
+            foreach(Edge e in edgeList)
+            {
+                removeEdge(e);
+            }
+        }
+        public void removeVertex(int vertex)
+        {
+            vertices.Remove(vertex);
+        }
+        public void addEdge(Edge e)
+        {
+            //Adds back an edge
+            edges.Add(e);
+        }
+        public void addBackEdgeSet(Edge chosenEdge)
+        {
+            //Adds back an edge set when hamiltonian path isn't satisfied. Doesn't add back chosen edge.
+            if (removedEdgeSets.Count > 0)
+            {
+                foreach (Edge e in removedEdgeSets[removedEdgeSets.Count - 1])
+                {
+                    if (e != chosenEdge)
+                    {
+                        edges.Add(e);
+                    }
+                }
+                removedEdgeSets.Remove(removedEdgeSets[removedEdgeSets.Count - 1]);
+            }
+        }
         public int numberofEdgesRemaining()
         {
             return edges.Count;
+        }
+        public int numberOfVerticesRemaining()
+        {
+            //Returns the number of untouched vertices
+            return vertices.Count;
         }
         public Edge smallerVertex(List<Edge> edgeList)
         {
@@ -56,6 +105,15 @@ namespace CombinatoricsProject
             var smallerV = edgeList.Min(e => e.vertexTwo());
             Edge smallestEdge = edgeList.Where(e => e.vertexTwo() == smallerV).First();
             return smallestEdge;
+        }
+        public Edge selectEdge(List<Edge> edgeList, int index)
+        {
+            Edge e = edgeList[index];
+            
+            removeEdges(edgeList);
+            removeVertex(e.vertexOne());
+            removeVertex(e.vertexTwo());
+            return e;
         }
         public int findFirstRemainingVertex(List<Edge> eulerCircuitVertices)
         {
@@ -75,6 +133,15 @@ namespace CombinatoricsProject
             }
 
             return 1;
+        }
+        public List<int> vertexList(int vertexCount)
+        {
+            List<int> v = new List<int>();
+            for(int i = 1; i < vertexCount + 1; i++)
+            {
+                v.Add(i);
+            }
+            return v;
         }
     }
 

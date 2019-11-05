@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CombinatoricsProject
@@ -9,7 +9,7 @@ namespace CombinatoricsProject
     class Algorithms
     {
         Edge justRemovedEdge;
-
+        Random rand;
 
         public Algorithms()
         {
@@ -60,11 +60,72 @@ namespace CombinatoricsProject
             Console.WriteLine(outputString);
             Console.ReadLine();
         }
-
-        public void appendEulerCircuit(Graph g, List<Edge> eulerCircuit, int vertex)
+        public string RandomHamiltonian(Graph g)
         {
-            //int v = g.smallerVertex(g.listEdges(vertex)).vertexOne();
-            //int v = g.lowestRemainingEdge().vertexOne();            
+            //EXTREMELY INEFFICIENT METHOD OF FINDING HAMILTONIAN PATH. ITS LIKE BRUTE FORCE BUT WORSE. DONT USE ON GRAPH WITH MORE THAN 40 VERTICES.
+            Graph gCopy = g.Copy();
+
+            List<Edge> hamPath = findRandomHamiltonianPath(gCopy, 1);
+            string outputString = printEdges(hamPath);
+            return outputString;
+        }
+        public List<Edge> findRandomHamiltonianPath(Graph g, int startVertex)
+        {
+            //Make copy of the copy to pass into another run if the the current run fails
+            Graph gCopy = g.Copy();
+            List<Edge> path = new List<Edge>();
+            Edge startEdge = selectRandomEdge(gCopy, startVertex);
+            justRemovedEdge = startEdge;
+            path.Add(startEdge);
+            while (gCopy.numberOfVerticesRemaining() > 0)
+            {
+                
+                //if (justRemovedEdge != null)
+                //{
+                    Edge chosenEdge = selectRandomEdge(gCopy, justRemovedEdge.vertexTwo());
+                    if (chosenEdge != null)
+                    {
+                        path.Add(chosenEdge);
+                        justRemovedEdge = chosenEdge;
+                    }
+                    else
+                    {
+                        //Redo with the copy of the copy of the graph if vertices remain untouched
+                        return findRandomHamiltonianPath(g, startVertex);
+                        //g.addBackEdgeSet(justRemovedEdge);
+                    }
+                //}
+                //else
+                //{
+                //    //Redo with the copy of the copy of the graph if vertices remain untouched
+                //    return findRandomHamiltonianPath(g, startVertex);
+                //}
+            }
+
+            return path;
+        }
+
+
+
+        //Methods whos primary purpose is to assist other methods
+        public Edge selectRandomEdge(Graph g, int vertex)
+        {
+            List<Edge> possibleEdges = g.listEdges(vertex);
+            Random rand = new Random();
+            if (possibleEdges.Count > 0)
+            {               
+                int r = rand.Next(0, possibleEdges.Count);
+                Thread.Sleep(50);
+                Edge chosenEdge = g.selectEdge(possibleEdges,r);
+                return chosenEdge;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public void appendEulerCircuit(Graph g, List<Edge> eulerCircuit, int vertex)
+        {         
             if (g.listEdges(vertex).Count > 0)
             {
                 List<Edge> tempEdges = g.listEdges(vertex);

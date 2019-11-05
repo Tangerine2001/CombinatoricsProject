@@ -11,18 +11,32 @@ namespace CombinatoricsProject
         static void Main(string[] args)
         {
             Algorithms a = new Algorithms();
+            for (int i = 0; i < 4; i++)
+            {
+                DateTime start = DateTime.Now;
+                //Graph g = testGraph();
+                //a.Greedy(g);
+                //a.Genetic(g);
 
-            //Graph g = testGraph();
-            //a.Greedy(g);
+                //Graph g1 = createGraphOne();
+                //a.Greedy(g1);
+                //string s = a.Genetic(g1);
 
-            //Graph g1 = createGraphOne();
-            //a.Greedy(g1);
 
-            //Graph g2 = createGraphTwo();
-            //a.Greedy(g2);
+                Graph g2 = createTypeFive();
+                //a.Greedy(g2);
+                string s = a.RandomHamiltonian(g2);
 
-            Graph g3 = createGraphThree();
-            a.Greedy(g3);
+
+                //Graph g3 = createGraphThree();
+                //a.Greedy(g3);
+
+                DateTime stop = DateTime.Now;
+                TimeSpan timeDiff = (stop - start);
+                Console.WriteLine(String.Format("{0}:{1}:{2}:{3}", timeDiff.Days, timeDiff.Hours, timeDiff.Minutes, timeDiff.Seconds));
+                Console.WriteLine(s);
+            }
+            Console.ReadLine();
         }
 
         public static Graph testGraph()
@@ -46,7 +60,7 @@ namespace CombinatoricsProject
                                                         new Edge(11,12,10)});
             return g;
         }
-        public static Graph createGraphTwo()
+        public static Graph createTypeFive()
         {
             Graph g = new Graph(38, new List<Edge>(){new Edge(1,2,10), new Edge(1,3,10),
                                                       new Edge(2,3,10), new Edge(2,9,10), new Edge(2,10,10),
