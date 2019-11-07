@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +14,7 @@ namespace CombinatoricsProject
         public Algorithms()
         {
             justRemovedEdge = null;
+            rand = null;
         }
 
         public void Greedy(Graph g)
@@ -60,13 +61,14 @@ namespace CombinatoricsProject
             Console.WriteLine(outputString);
             Console.ReadLine();
         }
+
         public string RandomHamiltonian(Graph g)
         {
             //EXTREMELY INEFFICIENT METHOD OF FINDING HAMILTONIAN PATH. ITS LIKE BRUTE FORCE BUT WORSE. DONT USE ON GRAPH WITH MORE THAN 40 VERTICES.
             Graph gCopy = g.Copy();
 
             List<Edge> hamPath = findRandomHamiltonianPath(gCopy, 1);
-            string outputString = printEdges(hamPath);
+            string outputString = "Path: " + printEdges(hamPath) + "\nDistance: " + pathDistance(hamPath);
             return outputString;
         }
         public List<Edge> findRandomHamiltonianPath(Graph g, int startVertex)
@@ -79,9 +81,6 @@ namespace CombinatoricsProject
             path.Add(startEdge);
             while (gCopy.numberOfVerticesRemaining() > 0)
             {
-                
-                //if (justRemovedEdge != null)
-                //{
                     Edge chosenEdge = selectRandomEdge(gCopy, justRemovedEdge.vertexTwo());
                     if (chosenEdge != null)
                     {
@@ -90,21 +89,30 @@ namespace CombinatoricsProject
                     }
                     else
                     {
-                        //Redo with the copy of the copy of the graph if vertices remain untouched
+                        //Redo if vertices remain untouched
                         return findRandomHamiltonianPath(g, startVertex);
-                        //g.addBackEdgeSet(justRemovedEdge);
                     }
-                //}
-                //else
-                //{
-                //    //Redo with the copy of the copy of the graph if vertices remain untouched
-                //    return findRandomHamiltonianPath(g, startVertex);
-                //}
             }
 
             return path;
         }
+        public string GeneralAlgorithm(Graph g)
+        {
+            Graph gCopy = g.Copy();
 
+            List<Edge> path = new List<Edge>();
+            Edge startEdge = selectShortestEdge(gCopy, 1);
+            justRemovedEdge = startEdge;
+            path.Add(startEdge);
+
+            while (gCopy.numberOfVerticesRemaining() > 0)
+            {
+                Edge chosenEdge = selectShortestEdge(gCopy, justRemovedEdge.vertexTwo());
+            }
+
+            string outputString = null;
+            return outputString;
+        }
 
 
         //Methods whos primary purpose is to assist other methods
@@ -123,6 +131,13 @@ namespace CombinatoricsProject
             {
                 return null;
             }
+        }
+        public Edge selectShortestEdge(Graph g, int vertex)
+        {
+            List<Edge> edgeList = g.listEdges(vertex);
+            int shortestLength = (int)edgeList.Min(e => e.getLength());
+            Edge shortestEdge = edgeList.Where(e => e.getLength() == shortestLength).First();
+            return shortestEdge;
         }
         public void appendEulerCircuit(Graph g, List<Edge> eulerCircuit, int vertex)
         {         
@@ -180,6 +195,15 @@ namespace CombinatoricsProject
                 total += e.Count;
             }
             return total;
+        }
+        public int pathDistance(List<Edge> path)
+        {
+            int totalDist = 0;
+            foreach (Edge e in path)
+            {
+                totalDist += e.getLength();
+            }
+            return totalDist;
         }
     }
 }

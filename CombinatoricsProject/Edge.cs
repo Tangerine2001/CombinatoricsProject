@@ -29,6 +29,11 @@ namespace CombinatoricsProject
             return v2;
         }
 
+        public int getLength()
+        {
+            return distance;
+        }
+
         public void switchVertices()
         {
             int temp = v1;

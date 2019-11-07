@@ -24,6 +24,7 @@ namespace CombinatoricsProject
         {
             Graph copy = (Graph)this.MemberwiseClone();
             copy.edges = new List<Edge>(edges);
+            copy.removedEdgeSets = new List<List<Edge>>(removedEdgeSets);
             copy.vertexCount = this.vertexCount;
             copy.vertices = new List<int>(vertices);
             return copy;
