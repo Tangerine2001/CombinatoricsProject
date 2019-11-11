@@ -9,6 +9,9 @@ Windows operating System. MacOS, iOS, and Linux are not compatible.
 Graph Type and Version with corresponding pictures are located under the
 GraphPictures folder.
 
+Source code is located in the PDF Scripts folder. The scripts and others can be found
+at https://github.com/Tangerine2001/CombinatoricsProject
+
 You can tell the algorithm is running when you have clicked a button corresponding
 to which algorithm you wanted to run is and it's still highlighted blue.
 
