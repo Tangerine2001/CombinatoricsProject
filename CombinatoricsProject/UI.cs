@@ -52,7 +52,6 @@ namespace CombinatoricsProject
                 selectedGraph = graphs[type - 1][version - 1];
                 string output = a.Greedy(selectedGraph);
                 outputLabel.Text = output;
-                imageBox.Image = Resources.Type9Version2;
             }           
         }
 
@@ -108,8 +107,8 @@ namespace CombinatoricsProject
         {
             List<List<Image>> imageList = new List<List<Image>>() {
                 new List<Image>(){Resources.Type1Version1, Resources.Type1Version2},
-                new List<Image>(){Resources.Type2Version1, Resources.Type3Version2},
-                new List<Image>(){Resources.Type3Version1, Resources.Type1Version2},
+                new List<Image>(){Resources.Type2Version1, Resources.Type2Version2},
+                new List<Image>(){Resources.Type3Version1, Resources.Type3Version2},
                 new List<Image>(){Resources.Type4Version1, Resources.Type4Version2},
                 new List<Image>(){Resources.Type5Version1, Resources.Type5Version2},
                 new List<Image>(){Resources.Type6Version1, Resources.Type6Version2},

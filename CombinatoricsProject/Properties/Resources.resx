@@ -121,8 +121,8 @@
   <data name="Type8Version1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Type8Version1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Type6Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Type6Version2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Type3Version1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Type3Version1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Type9Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Type9Version21.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -151,8 +151,8 @@
   <data name="Type1Version1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Type1Version1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Type3Version1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Type3Version1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Type7Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Type7Version2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Type2Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Type2Version2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,13 +169,13 @@
   <data name="Type9Version1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Type9Version13.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Type7Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Type7Version2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Type6Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Type6Version2.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Type10Verison1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Type10Verison1.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Type10Version2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Type10Version2.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Type10Version21.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
