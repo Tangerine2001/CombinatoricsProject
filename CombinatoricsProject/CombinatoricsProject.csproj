@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +51,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,11 +64,132 @@
     <Compile Include="Algorithms.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI.Designer.cs">
+      <DependentUpon>UI.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI.resx">
+      <DependentUpon>UI.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version1.JPEG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version2.JPEG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version11.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version12.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version21.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type9Version13.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type8Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type8Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type7Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type7Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type5Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type5Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type6Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type6Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type1Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type1Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type4Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type4Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type2Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type2Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type3Version1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type3Version2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type10Verison1.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Type10Version2.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

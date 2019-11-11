@@ -17,13 +17,12 @@ namespace CombinatoricsProject
             rand = null;
         }
 
-        public void Greedy(Graph g)
+        public string Greedy(Graph g)
         {
+            DateTime start = DateTime.Now;
             List<Edge> eulerCircuit = new List<Edge>();
             List<Edge> finalEulerCircuit = new List<Edge>();
             List<List<Edge>> iterations = new List<List<Edge>>();
-
-            string outputString = "Euler Circuit is as follows: ";
             bool firstVertexEntered = false;
             //Gets the first vertex of circuit as vertexOne. The rest should all be vertexTwo.
             
@@ -57,18 +56,21 @@ namespace CombinatoricsProject
             //eulerCircuit = insertIterations(iterations);
             finalEulerCircuit.Clear();
             finalEulerCircuit = insertIterations(iterations);
-            outputString += printEdges(finalEulerCircuit);
-            Console.WriteLine(outputString);
-            Console.ReadLine();
+            DateTime stop = DateTime.Now;
+            TimeSpan timeDiff = (stop - start);
+            string outputString = String.Format("Time Taken: {0}:{1}:{2}:{3}\n", timeDiff.Days, timeDiff.Hours, timeDiff.Minutes, timeDiff.Seconds) + "Euler Circuit: " + printEdges(finalEulerCircuit) + "\nDistance: " + pathDistance(finalEulerCircuit);
+            return outputString;
         }
-
         public string RandomHamiltonian(Graph g)
         {
             //EXTREMELY INEFFICIENT METHOD OF FINDING HAMILTONIAN PATH. ITS LIKE BRUTE FORCE BUT WORSE. DONT USE ON GRAPH WITH MORE THAN 40 VERTICES.
+            DateTime start = DateTime.Now;
             Graph gCopy = g.Copy();
 
             List<Edge> hamPath = findRandomHamiltonianPath(gCopy, 1);
-            string outputString = "Path: " + printEdges(hamPath) + "\nDistance: " + pathDistance(hamPath);
+            DateTime stop = DateTime.Now;
+            TimeSpan timeDiff = (stop - start);
+            string outputString = String.Format("Time Taken: {0}:{1}:{2}:{3}\n", timeDiff.Days, timeDiff.Hours, timeDiff.Minutes, timeDiff.Seconds) + "Path: " + printEdges(hamPath) + "\nDistance: " + pathDistance(hamPath);
             return outputString;
         }
         public List<Edge> findRandomHamiltonianPath(Graph g, int startVertex)
@@ -98,24 +100,86 @@ namespace CombinatoricsProject
         }
         public string GeneralAlgorithm(Graph g)
         {
+            DateTime start = DateTime.Now;
             Graph gCopy = g.Copy();
+
+            bool backTrack = false;
 
             List<Edge> path = new List<Edge>();
             Edge startEdge = selectShortestEdge(gCopy, 1);
             justRemovedEdge = startEdge;
             path.Add(startEdge);
-
+            gCopy.removeEdges(gCopy.listEdges(1));
+            gCopy.removeVertex(justRemovedEdge.vertexOne());
+            gCopy.removeVertex(justRemovedEdge.vertexTwo());
+            gCopy.removeEdge(startEdge);
             while (gCopy.numberOfVerticesRemaining() > 0)
             {
-                Edge chosenEdge = selectShortestEdge(gCopy, justRemovedEdge.vertexTwo());
-            }
+                Edge chosenEdge = null;
+                if(!backTrack)
+                {
+                    chosenEdge = selectShortestEdge(gCopy, justRemovedEdge.vertexTwo());
+                }
+                else
+                {
+                    chosenEdge = firstBackTrackEdge(gCopy, path);
+                    if (path.Count > 0)
+                    {
+                        justRemovedEdge = path[path.Count - 1];
+                    }
+                }
 
-            string outputString = null;
+                if (chosenEdge != null)
+                {
+                    path.Add(chosenEdge);
+                    gCopy.removeEdges(gCopy.listEdges(justRemovedEdge.vertexTwo()));
+                    gCopy.removeVertex(chosenEdge.vertexOne());
+                    gCopy.removeVertex(chosenEdge.vertexTwo());
+                    gCopy.removeEdge(chosenEdge);
+                    justRemovedEdge = chosenEdge;
+                    backTrack = false;
+                }
+                else if (gCopy.numberOfVerticesRemaining() > 0)
+                {
+                    backTrack = true;
+                }
+            }
+            DateTime stop = DateTime.Now;
+            TimeSpan timeDiff = (stop - start);
+            string outputString = String.Format("Time Taken: {0}:{1}:{2}:{3}\n", timeDiff.Days, timeDiff.Hours, timeDiff.Minutes, timeDiff.Seconds) + "Path: " + printEdges(path) + "\nDistance: " + pathDistance(path);
             return outputString;
         }
 
 
         //Methods whos primary purpose is to assist other methods
+        public Edge firstBackTrackEdge(Graph g, List<Edge> path)
+        {
+            Edge lastMove = path[path.Count - 1];
+            path.Remove(lastMove);
+            g.addBackEdgeSet(lastMove);
+            g.addBackOtherEdges(lastMove.vertexTwo(),lastMove, coveredVertices(path));
+            g.addBackVertex(lastMove.vertexTwo());
+            
+
+            Edge chosenEdge = selectShortestEdge(g, lastMove.vertexOne());
+
+            while (chosenEdge == null)
+            {
+
+                lastMove = path[path.Count - 1];
+                path.Remove(lastMove);
+                g.addBackEdgeSet(lastMove);
+                
+                g.addBackVertex(lastMove.vertexTwo());
+
+                chosenEdge = selectShortestEdge(g, lastMove.vertexOne());
+
+                g.addBackOtherEdges(lastMove.vertexTwo(), lastMove, coveredVertices(path));
+                
+            }
+
+            return chosenEdge;
+        }
         public Edge selectRandomEdge(Graph g, int vertex)
         {
             List<Edge> possibleEdges = g.listEdges(vertex);
@@ -135,10 +199,16 @@ namespace CombinatoricsProject
         public Edge selectShortestEdge(Graph g, int vertex)
         {
             List<Edge> edgeList = g.listEdges(vertex);
-            int shortestLength = (int)edgeList.Min(e => e.getLength());
-            Edge shortestEdge = edgeList.Where(e => e.getLength() == shortestLength).First();
-            return shortestEdge;
-        }
+            if(edgeList.Count > 0)
+            {
+                int shortestLength = (int)edgeList.Min(e => e.getLength());
+                Edge shortestEdge = edgeList.Where(e => e.getLength() == shortestLength).First();
+                
+                return shortestEdge;
+            }
+
+            return null;
+        }        
         public void appendEulerCircuit(Graph g, List<Edge> eulerCircuit, int vertex)
         {         
             if (g.listEdges(vertex).Count > 0)
@@ -204,6 +274,18 @@ namespace CombinatoricsProject
                 totalDist += e.getLength();
             }
             return totalDist;
+        }
+
+        public List<int> coveredVertices(List<Edge> path)
+        {
+            List<int> covered = new List<int>();
+            foreach(Edge e in path)
+            {
+                covered.Add(e.vertexOne());
+                covered.Add(e.vertexTwo());
+            }
+            List<int> distinctCovered = covered.Distinct().ToList();
+            return distinctCovered;
         }
     }
 }

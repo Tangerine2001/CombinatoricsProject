@@ -9,6 +9,7 @@ namespace CombinatoricsProject
     class Graph
     {
         List<Edge> edges = new List<Edge>();
+        List<Edge> originalEdges;
         List<List<Edge>> removedEdgeSets = new List<List<Edge>>();
         List<int> vertices = new List<int>();
         int vertexCount;
@@ -16,6 +17,7 @@ namespace CombinatoricsProject
         public Graph(int vert, List<Edge> edgeList)
         {
             edges = edgeList;
+            originalEdges = new List<Edge>(edges);
             vertexCount = vert;
             vertices = vertexList(vert);
         }
@@ -24,7 +26,8 @@ namespace CombinatoricsProject
         {
             Graph copy = (Graph)this.MemberwiseClone();
             copy.edges = new List<Edge>(edges);
-            copy.removedEdgeSets = new List<List<Edge>>(removedEdgeSets);
+            copy.originalEdges = new List<Edge>(edges);
+            copy.removedEdgeSets = new List<List<Edge>>();
             copy.vertexCount = this.vertexCount;
             copy.vertices = new List<int>(vertices);
             return copy;
@@ -37,15 +40,24 @@ namespace CombinatoricsProject
         }
         public List<Edge> listEdges(int vertex)
         {
-            //Returns all the edges with a connection to the vertex parameter
-            
-            
+            //Returns all the edges with a connection to the vertex parameter that still exist                     
             List<Edge> edgeList = edges.Where(e => e.vertexTwo() == vertex).ToList();
             foreach(Edge e in edgeList)
             {
                 e.switchVertices();
             }
             foreach(Edge e in edges.Where(e => e.vertexOne() == vertex).ToList())
+            {
+                edgeList.Add(e);
+            }
+            List<Edge> noDuplicateEdgeList = edgeList.Distinct().ToList();
+            return noDuplicateEdgeList;
+        }
+        public List<Edge> listOriginalEdges(int vertex)
+        {
+            //Returns all the edges with a connection to the vertex parameter that are part of the original                    
+            List<Edge> edgeList = originalEdges.Where(e => e.vertexTwo() == vertex).ToList();
+            foreach (Edge e in originalEdges.Where(e => e.vertexOne() == vertex).ToList())
             {
                 edgeList.Add(e);
             }
@@ -87,6 +99,64 @@ namespace CombinatoricsProject
                     }
                 }
                 removedEdgeSets.Remove(removedEdgeSets[removedEdgeSets.Count - 1]);
+            }
+        }
+        public void addBackOtherEdges(int vertex, Edge justRemovedEdge, List<int> pathVertices)
+        {
+            List<List<Edge>> forbiddenEdges = new List<List<Edge>>();
+            foreach(int i in pathVertices)
+            {
+                forbiddenEdges.Add(listOriginalEdges(i));
+            }
+            List<Edge> addBacks = listOriginalEdges(vertex);
+            List<Edge> temp = new List<Edge>(addBacks);
+            foreach (List<Edge> list in forbiddenEdges)
+            {
+                foreach (Edge e in list)
+                {
+                    foreach (Edge add in temp)
+                    {
+                        if (add == e)
+                        {
+                            addBacks.Remove(e);                            
+                        }
+                        
+                        if (add == justRemovedEdge)
+                        {
+                            addBacks.Remove(justRemovedEdge);
+                        }
+                        else
+                        {
+                            justRemovedEdge.switchVertices();
+                            if (add == justRemovedEdge)
+                            {
+                                addBacks.Remove(justRemovedEdge);
+                            }
+                            justRemovedEdge.switchVertices();
+                        }
+                        
+                    }
+                }
+            }
+
+            foreach (Edge e in addBacks)
+            {
+                addEdge(e);
+            }
+        }
+        public void addBackVertex(int vertex)
+        {
+            bool alreadyExists = false;
+            foreach (int v in vertices)
+            {
+                if (v == vertex)
+                {
+                    alreadyExists = true;
+                }
+            }
+            if (!alreadyExists)
+            {
+                vertices.Add(vertex);
             }
         }
         public int numberofEdgesRemaining()
